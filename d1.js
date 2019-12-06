@@ -99,16 +99,32 @@ const moduleWeights = [129192,
 63523,
 130179];
 
-function simpleFuelCalculation(weight) {
-    return Math.floor(weight[i]/3)-2
+function simpleFuelCalc(weight) {
+    return Math.floor(weight/3)-2
 }
-function simpleFuelCalculation(modules) {
+
+function advFuelCalc(weight){
+  if(weight <= 0){
+    return 0;
+  }
+  return weight+advFuelCalc(simpleFuelCalc(weight));
+}
+
+function partOne(modules) {
   let total = 0;
-  for (var module in modules) {
-    if (object.hasOwnProperty(module)) {
-      total += Math.floor(module[i]/3)-2;
-    }
+  for (let mod in modules) {
+      total+=simpleFuelCalc(modules[mod]);
   }
   return total;
 }
-document.querySelector('.output--d1simple').innerText = simpleFuelCalculation(moduleWeights);
+
+function partTwo(modules){
+  let total = 0;
+  for (let mod in modules){
+      total+=advFuelCalc(simpleFuelCalc(modules[mod]));
+  }
+  return total;
+}
+
+document.querySelector('.output--d1simple').innerText = partOne(moduleWeights);
+document.querySelector('.output--d1adv').innerText = partTwo(moduleWeights);
