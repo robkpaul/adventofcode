@@ -98,3 +98,17 @@ const moduleWeights = [129192,
 58220,
 63523,
 130179];
+
+function simpleFuelCalculation(weight) {
+    return Math.floor(weight[i]/3)-2
+}
+function simpleFuelCalculation(modules) {
+  let total = 0;
+  for (var module in modules) {
+    if (object.hasOwnProperty(module)) {
+      total += Math.floor(module[i]/3)-2;
+    }
+  }
+  return total;
+}
+document.querySelector('.output--d1simple').innerText = simpleFuelCalculation(moduleWeights);
