@@ -1,4 +1,4 @@
-let modules = [129192,
+const moduleWeights = [129192,
 58561,
 57267,
 95382,
