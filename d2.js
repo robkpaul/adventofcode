@@ -56,7 +56,6 @@ function partTwo(){
         if(halt){
           if(opCode[0] === 19690720){
             return noun*100+verb;
-            found = true;
           }
           break;
         }
