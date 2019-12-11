@@ -1,26 +1,38 @@
 function searchDigits(start, end) {
   let matches = 0;
   for (let num = start; num <= end; num++) {
-    for (let j = 0, prev = 0, double = false; j < 6; j++){
-      let current = parseInt(num.toString()[j]);
-      if(!(current>=prev)){
-        break;
+      let current = num.toString();
       }
-      else if(current===prev){
-        double = true;
-      }
-      else if(j===5 && double){
+      if(hasDouble(current) && double){
         matches++;
       }
       prev = current;
     }
-  }
+    }
   return matches;
 }
-function meetsRequirements(number, prev){
+function doesIncrease(number, prev){
   if(number.length === 0){
     return true;
   }
-  
+  let current = parseInt(number[0]);
+  if(current < prev){
+    return doesIncrease(number[1], current);
+  }
+  else{
+      return false;
+  }
+}
+function hasDouble(number, prev) {
+    if(number.length === 0){
+        return false;
+    }
+    let current = parseInt(number.toString()[0]);
+    if(number === prev){
+        return true;
+    }
+    else{
+        return hasDouble(number[1], current);
+    }
 }
 console.log(searchDigits(171309, 643603));
