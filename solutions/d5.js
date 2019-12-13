@@ -7,8 +7,8 @@ const c_ADD = 1;
 const c_MULT = 2;
 const c_SAVE = 3;
 const c_OUTPUT = 4;
-const c_JUMP_IF_TRUE = 5;
-const c_JUMP_IF_FALSE = 6;
+const c_JUMP_T = 5;
+const c_JUMP_F = 6;
 const c_LESS_THAN = 7;
 const c_EQUALS = 8;
 const c_HALT = 99;
@@ -79,65 +79,97 @@ function airConditionerComputer() { //part 1
     }
   }
 }
-function thermalRadiatorComputer() {
+function thermalRadiatorComputer() { //part 2
   let halt = false;
   for (let i = 0; i < opcode.length; i+=increment) {
     split = splitCode(opcode[i]);
     switch (split.operator) {
       case c_ADD:
-        opcode[opcode[i+3]] = retrieveValue(opcode[i+1], split.param1) + retrieveValue(opcode[i+2], split.param2);
+      console.log('Opcode: ADD');
+      opcode[opcode[i+3]] = retrieveValue(opcode[i+1], split.param1) + retrieveValue(opcode[i+2], split.param2);
 
-        increment = 4;
+      increment = 4;
       break;
       case c_MULT:
-        opcode[opcode[i+3]] = retrieveValue(opcode[i+1], split.param1) * retrieveValue(opcode[i+2], split.param2);
+      console.log('Opcode: MULT');
+      opcode[opcode[i+3]] = retrieveValue(opcode[i+1], split.param1) * retrieveValue(opcode[i+2], split.param2);
 
-        increment = 4;
+      increment = 4;
       break;
       case c_SAVE:
-        opcode[opcode[i+1]] = input;
-
-        increment = 2;
+      console.log('Opcode: SAVE');
+      opcode[opcode[i+1]] = input;
+      increment = 2;
       break;
       case c_OUTPUT:
-        console.log(retrieveValue(opcode[i+1], split.param1))
+      console.log('Opcode: OUTPUT');
+      console.log(retrieveValue(opcode[i+1], split.param1))
 
-        increment = 2;
+      increment = 2;
       break;
-      case c_JUMP_IF_TRUE:
-        if(split.param1!==0){
-          i = retrieveValue(opcode[i+2], split.param2);
-          increment = 0;
-          break
-        }
-        increment = 4;
+      case c_JUMP_T:
+      console.log('Opcode: JIT');
+      if(retrieveValue(opcode[i+1], split.param1)!==0){
+        i = retrieveValue(opCode[i+2], split.param2)
+        increment = 0;
+      }
+      else{
+        increment = 3;
+      }
       break;
-      case c_JUMP_IF_FALSE:
-        if(split.param1===0){
-          i = retrieveValue(opcode[i+2], split.param2);
-          increment = 0;
-          break
-        }
-        increment = 4;
+      case c_JUMP_F:
+      if(retrieveValue(opcode[i+1], split.param1)===0){
+        i = retrieveValue(opCode[i+2], split.param2)
+        increment = 0;
+      }
+      else{
+        increment = 3;
+      }
       break;
       case c_LESS_THAN:
-        if(retrieveValue(opcode[i+1], split.param1) < retrieveValue(opcode[i+1], split.param1)){
-          opcode[opcode[i+3]] = 1;
-          increment = 4;
+      first = retrieveValue(opcode[i+1], split.param1);
+      second = retrieveValue(opCode[i+2], split.param2);
+      if(first < second){
+        switch (split.param3) {
+          case m_IMMEDIATE:
+            opcode[i+3] = 1;
+          break;
+          case m_POSITION:
+            opcode[opcode[i+3]] = 1;
           break;
         }
-        opcode[opcode[i+3]] = 0;
-        increment = 4;
+
+      }
+      else{
+        switch(split.param3){
+          case m_IMMEDIATE:
+            opcode[i+3] = 0;
+          break;
+          case m_POSITION:
+            opcode[opcode[i+3]] = 0;
+          break;
+        }
+      }
+      increment = 4;
       break;
       case c_EQUALS:
-        if(retrieveValue(opcode[i+1], split.param1) === retrieveValue(opcode[i+1], split.param1)){
-          opcode[opcode[i+3]] = 1;
-          increment = 4;
+      first = retrieveValue(opcode[i+1], split.param1);
+      second = retrieveValue(opCode[i+2], split.param2);
+      if(first === second){
+        switch (split.param3) {
+          case m_IMMEDIATE:
+            opcode[i+3] = 1;
+          break;
+          case m_POSITION:
+            opcode[opcode[i+3]] = 1;
           break;
         }
+      }
+      else{
         opcode[opcode[i+3]] = 0;
-        increment = 4;
-        break;
+      }
+      increment = 4;
+      break;
       default:
       if(split.operator !== c_HALT){
         throw `Expected opcode, got ${split.operator}`;
