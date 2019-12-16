@@ -110,7 +110,7 @@ function thermalRadiatorComputer() { //part 2
       case c_JUMP_T:
       console.log('Opcode: JIT');
       if(retrieveValue(opcode[i+1], split.param1)!==0){
-        i = retrieveValue(opCode[i+2], split.param2)
+        i = retrieveValue(opcode[i+2], split.param2)
         increment = 0;
       }
       else{
@@ -119,7 +119,7 @@ function thermalRadiatorComputer() { //part 2
       break;
       case c_JUMP_F:
       if(retrieveValue(opcode[i+1], split.param1)===0){
-        i = retrieveValue(opCode[i+2], split.param2)
+        i = retrieveValue(opcode[i+2], split.param2)
         increment = 0;
       }
       else{
@@ -128,7 +128,7 @@ function thermalRadiatorComputer() { //part 2
       break;
       case c_LESS_THAN:
       first = retrieveValue(opcode[i+1], split.param1);
-      second = retrieveValue(opCode[i+2], split.param2);
+      second = retrieveValue(opcode[i+2], split.param2);
       if(first < second){
         switch (split.param3) {
           case m_IMMEDIATE:
@@ -154,7 +154,7 @@ function thermalRadiatorComputer() { //part 2
       break;
       case c_EQUALS:
       first = retrieveValue(opcode[i+1], split.param1);
-      second = retrieveValue(opCode[i+2], split.param2);
+      second = retrieveValue(opcode[i+2], split.param2);
       if(first === second){
         switch (split.param3) {
           case m_IMMEDIATE:
@@ -164,11 +164,18 @@ function thermalRadiatorComputer() { //part 2
             opcode[opcode[i+3]] = 1;
           break;
         }
-      }
-      else{
-        opcode[opcode[i+3]] = 0;
-      }
-      increment = 4;
+        }
+        else{
+          switch (split.param3){
+            case m_IMMEDIATE:
+              opcode[i+3] = 0;
+            break;
+            case m_POSITION:
+              opcode[opcode[i+3]] = 0;
+            break;
+          }
+        }
+        increment = 4;
       break;
       default:
       if(split.operator !== c_HALT){
@@ -183,3 +190,4 @@ function thermalRadiatorComputer() { //part 2
     }
   }
 }
+thermalRadiatorComputer();
