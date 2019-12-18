@@ -1,4 +1,4 @@
-let oribtals = [
+const orbitals = [
   "HX5)C21",
   "VZD)VW7",
   "BTP)JHL",
@@ -1057,19 +1057,50 @@ let oribtals = [
   "9GD)PY5",
   "YPD)6JS"
 ];
+const example = [
+  'COM)B',
+  'B)C',
+  'C)D',
+  'D)E',
+  'E)F',
+  'B)G',
+  'G)H',
+  'D)I',
+  'E)J',
+  'J)K',
+  'K)L'];
 
-function orbitalCalculator() {
-    let orbitMatches = 0;
-    for (var i = 0; i < orbitals.length; i++) {
-        let currentOrbitals = [orbitals[i]];
-        for (var j = 0; j < currentOrbitals.length; j++) {
-            for (var k = 0; k < orbitals.length; k++) {
-                if(currentOrbitals[j]===orbitals[k].substring(0,2)){
-                    currentOrbitals[currentOrbitals.length] = orbitals[k].substring(3);
-                    orbitMatches++;
-                }
-            }
-            
-        }
+  orbitalCalculator = (data) => {
+    galaxy = createGalaxy(data);
+    com = galaxy[0];
+    for (planet of galaxy) {
+      if(planet != com){
+
+      }
     }
-}
+  }
+
+  countBackToCOM = (data, com, planet) => {
+
+  }
+
+  createGalaxy = (data) =>{
+    let galaxy = [];
+    for(let planet of data){
+      if(galaxy.length<1){
+
+      }
+      else {
+        for (var i in galaxy) {
+          if(planet === galaxy[i]){
+            break;
+          }
+        else if (i === galaxy.length-1) {
+          galaxy[galaxy.length]=planet
+        }
+      }
+      }
+    return galaxy;
+  }
+
+  console.log(createGalaxy(example));
