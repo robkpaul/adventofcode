@@ -1,4 +1,4 @@
-let orbits = [
+let oribtals = [
   "HX5)C21",
   "VZD)VW7",
   "BTP)JHL",
@@ -1057,3 +1057,19 @@ let orbits = [
   "9GD)PY5",
   "YPD)6JS"
 ];
+
+function orbitalCalculator() {
+    let orbitMatches = 0;
+    for (var i = 0; i < orbitals.length; i++) {
+        let currentOrbitals = [orbitals[i]];
+        for (var j = 0; j < currentOrbitals.length; j++) {
+            for (var k = 0; k < orbitals.length; k++) {
+                if(currentOrbitals[j]===orbitals[k].substring(0,2)){
+                    currentOrbitals[currentOrbitals.length] = orbitals[k].substring(3);
+                    orbitMatches++;
+                }
+            }
+            
+        }
+    }
+}
